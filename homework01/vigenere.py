@@ -9,20 +9,18 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = ""
-    check = 0
-    for i in plaintext:
-        if not i.isalpha():
-            check += 1
-            element_code = ord(i)
-        elif i.islower():
-            shift = ord(keyword[check % len(keyword)]) - ord("a")
-            element_code = (ord(i) + shift - ord("a")) % 26 + ord("a")
-            check += 1
+    ciphertext = ""
+    a_ord = ord("a")
+    big_a_ord = ord("A")
+    delta_english = ord("Z") - ord("A") + 1
+    for index, letter in enumerate(plaintext):
+        if "a" <= letter <= "z" or "A" <= letter <= "Z":
+            register = a_ord if letter.islower() else big_a_ord
+            shift = ord(keyword[index % len(keyword)]) - register
+            element_code = (ord(letter) + shift - register) % delta_english + register
+            ciphertext += chr(element_code)
         else:
-            shift = ord(keyword[check % len(keyword)]) - ord("A")
-            element_code = (ord(i) + shift - ord("A")) % 26 + ord("A")
-            check += 1
-        ciphertext += chr(element_code)
+            ciphertext += letter
     return ciphertext
 
 
@@ -37,18 +35,15 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = ""
-    check = 0
-    for i in ciphertext:
-        if not i.isalpha():
-            check += 1
-            element_code = ord(i)
-        elif i.islower():
-            shift = ord(keyword[check % len(keyword)]) - ord("a")
-            element_code = (ord(i) - shift - ord("a")) % 26 + ord("a")
-            check += 1
+    a_ord = ord("a")
+    big_a_ord = ord("A")
+    delta_english = ord("Z") - ord("A") + 1
+    for index, letter in enumerate(ciphertext):
+        if "a" <= letter <= "z" or "A" <= letter <= "Z":
+            register = a_ord if letter.islower() else big_a_ord
+            shift = ord(keyword[index % len(keyword)]) - register
+            element_code = (ord(letter) - shift - register) % delta_english + register
+            plaintext += chr(element_code)
         else:
-            shift = ord(keyword[check % len(keyword)]) - ord("A")
-            element_code = (ord(i) - shift - ord("A")) % 26 + ord("A")
-            check += 1
-        plaintext += chr(element_code)
+            plaintext += letter
     return plaintext
