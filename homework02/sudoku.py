@@ -153,9 +153,26 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
-    """ Если решение solution верно, то вернуть True, в противном случае False """
-    # TODO: Add doctests with bad puzzles
-    pass
+    """ Если решение solution верно, то вернуть True, в противном случае False
+        >>> solved = [list("534678912"),list("672195348"),list("198342567"),list("859761423"),list("426853791"),list("713924856"),list("961537284"),list("287419635"),list("345286179")]
+        >>> check_solution(solved)
+        True
+
+        >>> wrong = [list("534678912"), list("772195348"), list("198342567"),list("859761423"),list("426853791"), list("713924856"), list("961537284"), list("287419635"), list("345286179")]
+        >>> check_solution(wrong)
+        False
+       """
+
+    for elem in range(9):
+        if len(set(i for i in get_row(solution, (elem, 0)) if i != '.')) != 9:
+            return False
+        if len(set(i for i in get_col(solution, (0, elem)) if i != '.')) != 9:
+            return False
+    for block_1 in range(3):
+        for block_2 in range(3):
+            if len(set(i for i in get_block(solution, (block_1 * 3, block_2 * 3)) if i != '.')) != 9:
+                return False
+    return True
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
