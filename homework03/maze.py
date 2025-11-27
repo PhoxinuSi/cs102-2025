@@ -55,6 +55,7 @@ def bin_tree_maze(
 
     for x, y in empty_cells:
         remove_wall(grid, (x, y))
+        
     # генерация входа и выхода
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
@@ -75,8 +76,18 @@ def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     :param grid:
     :return:
     """
-
-    pass
+    exits = []
+    count_exits = 0
+    for x in range(len(grid)):
+        for y in range(len(grid[0])):
+            if grid[x][y] == 'X':
+                exits.append((x, y))
+                count_exits += 1
+            if count_exits == 2:
+                break
+        if count_exits == 2:
+            break
+    return exits
 
 
 def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str, int]]]:
