@@ -55,7 +55,7 @@ def bin_tree_maze(
 
     for x, y in empty_cells:
         remove_wall(grid, (x, y))
-        
+
     # генерация входа и выхода
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
@@ -77,16 +77,10 @@ def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     :return:
     """
     exits = []
-    count_exits = 0
     for x in range(len(grid)):
         for y in range(len(grid[0])):
             if grid[x][y] == 'X':
                 exits.append((x, y))
-                count_exits += 1
-            if count_exits == 2:
-                break
-        if count_exits == 2:
-            break
     return exits
 
 
@@ -121,8 +115,20 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     :return:
     """
 
-    pass
+    x, y = coord
+    if x == 0 and y == 0 or x == len(grid) and y == 0 or x == 0 and y == len(grid[0]):
+        return True
 
+    if x == len(grid) and y == 0 or x == len(grid) and y == len(grid[0]):
+        return True
+
+    if x == 0 and grid[x+1][y] != " " or x == len(grid)-1 and grid[x-1][y] != " ":
+        return True
+
+    if y == 0 and grid[x][y+1] != " " or y == len(grid[0]) - 1 and grid[x][y-1] != " ":
+        return True
+
+    return False
 
 def solve_maze(
     grid: List[List[Union[str, int]]],
@@ -133,7 +139,17 @@ def solve_maze(
     :return:
     """
 
-    pass
+    exits = get_exits(grid)
+    if len(exits) == 1:
+        return grid, get_exits(grid)[0]
+
+    for elem in exits:
+        if encircled_exit(grid, elem):
+            return grid, None
+
+
+
+
 
 
 def add_path_to_grid(
