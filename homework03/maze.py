@@ -21,10 +21,10 @@ def remove_wall(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> Li
     if direction == "up":
         if x - 1 > 0:
             grid[x - 1][y] = " "
-        elif y + 2 < len(grid):
+        elif y + 2 < len(grid[0]):
             grid[x][y + 1] = " "
     else:
-        if y + 2 < len(grid):
+        if y + 2 < len(grid[0]):
             grid[x][y + 1] = " "
         elif x - 1 > 0:
             grid[x - 1][y] = " "
@@ -155,7 +155,7 @@ def solve_maze(
     :param grid:
     :return:
     """
-
+    grid = deepcopy(grid)
     exits = get_exits(grid)
     if len(exits) == 1:
         return grid, get_exits(grid)[0]
