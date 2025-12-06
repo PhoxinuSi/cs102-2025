@@ -1,5 +1,4 @@
 import tkinter as tk
-from copy import deepcopy
 from tkinter import messagebox, ttk
 from typing import List
 
@@ -22,7 +21,7 @@ def draw_maze(grid: List[List[str | int]], size: int = 10):
             elif cell == "■":
                 color = "black"
             elif cell == "X":
-                color = "Yellow"
+                color = "red"
             draw_cell(y, x, color, size)
 
 
@@ -41,10 +40,6 @@ if __name__ == "__main__":
 
     CELL_SIZE = 10
     GRID = bin_tree_maze(N, M)
-    try_grid = bin_tree_maze(N, M)
-    while not solve_maze(deepcopy(try_grid)):
-        try_grid = bin_tree_maze(N, M)
-    GRID = try_grid
 
     window = tk.Tk()
     window.title("Maze")
