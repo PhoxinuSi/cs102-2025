@@ -73,9 +73,9 @@ def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     :return:
     """
     exits = []
-    for x in range(len(grid)):
-        for y in range(len(grid[0])):
-            if grid[x][y] == "X":
+    for x, row in enumerate(grid):
+        for y, cell in enumerate(row):
+            if cell == "X":
                 exits.append((x, y))
     return exits
 
@@ -92,9 +92,10 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
         for y in range(len(grid[0])):
             if grid[x][y] == k:
                 for elem in [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)]:
-                    if 0 <= elem[0] < len(grid) and 0 <= elem[1] < len(grid[0]):
-                        if grid[elem[0]][elem[1]] == 0:
-                            grid[elem[0]][elem[1]] = k + 1
+                    move_x, move_y = elem
+                    if 0 <= move_x < len(grid) and 0 <= move_y < len(grid[0]):
+                        if grid[move_x][move_y] == 0:
+                            grid[move_x][move_y] = k + 1
 
     return grid
 
