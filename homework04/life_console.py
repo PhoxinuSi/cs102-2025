@@ -1,4 +1,5 @@
 import curses
+from typing import Optional
 
 from life import GameOfLife
 from ui import UI
@@ -7,7 +8,7 @@ from ui import UI
 class Console(UI):
     def __init__(self, life: GameOfLife) -> None:
         super().__init__(life)
-        self.screen = None
+        self.screen: Optional[curses.window] = None
 
     def draw_borders(self, screen) -> None:
         """Отобразить рамку."""
@@ -46,31 +47,32 @@ class Console(UI):
             pass
 
     def run(self) -> None:
-        self.screen = curses.initscr()
+        screen = curses.initscr()
+        self.screen = screen
         curses.noecho()
         curses.cbreak()
-        self.screen.keypad(True)
+        screen.keypad(True)
         curses.curs_set(0)
 
         try:
-            self.screen.nodelay(True)
+            screen.nodelay(True)
 
             while True:
-                self.screen.clear()
+                screen.clear()
 
-                key = self.screen.getch()
+                key = screen.getch()
                 if key in (ord("e"), ord("E")):
                     break
 
                 self.draw_borders(self.screen)
                 self.draw_grid(self.screen)
 
-                self.screen.refresh()
+                screen.refresh()
                 self.life.step()
                 curses.napms(150)
 
         finally:
-            self.screen.keypad(False)
+            screen.keypad(False)
             curses.nocbreak()
             curses.echo()
             curses.curs_set(1)
