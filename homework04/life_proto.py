@@ -2,7 +2,7 @@ import random
 import typing as tp
 
 import pygame
-
+from pygame.locals import *
 
 Cell = tp.Tuple[int, int]
 Cells = tp.List[int]
@@ -39,11 +39,12 @@ class GameOfLife:
 
     def run(self) -> None:
         """Запустить игру"""
+        pygame.init()
         clock = pygame.time.Clock()
         pygame.display.set_caption("Game of Life")
         self.screen.fill(pygame.Color("white"))
 
-        self.grid = self.create_grid()
+        self.grid = self.create_grid(randomize=True)
 
         running = True
         while running:
@@ -51,10 +52,13 @@ class GameOfLife:
                 if event.type == QUIT:
                     running = False
 
-            self.draw_lines()
             self.draw_grid()
+            self.draw_lines()
+
+            self.grid = self.get_next_generation()
             pygame.display.flip()
             clock.tick(self.speed)
+        pygame.quit()
 
     def create_grid(self, randomize: bool = False) -> Grid:
         """
