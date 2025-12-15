@@ -1,8 +1,5 @@
-from pathlib import Path
-
 import pygame
 from life import GameOfLife
-
 from pygame.locals import *
 from ui import UI
 
@@ -58,15 +55,6 @@ class GUI(UI):
                         self.life.curr_generation = self.life.create_grid(randomize=True)
 
                         self.life.generations = 1
-                    elif event.key == K_s:
-                        self.life.save(Path("saved_game.txt"))
-                    elif event.key == K_u:
-                        try:
-                            self.life = GameOfLife.from_file(Path("saved_game.txt"))
-                            self.width = self.life.cols * self.cell_size
-                            self.height = self.life.rows * self.cell_size
-                        except FileNotFoundError:
-                            pass
                 elif event.type == MOUSEBUTTONDOWN and paused:
                     if event.button == 1:
                         mouse_x, mouse_y = event.pos
