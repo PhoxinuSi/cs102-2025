@@ -1,9 +1,9 @@
 from pathlib import Path
 
 import pygame
-from life import GameOfLife
-
 from pygame.locals import *
+
+from life import GameOfLife
 from ui import UI
 
 
