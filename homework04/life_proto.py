@@ -10,9 +10,7 @@ Grid = tp.List[Cells]
 
 
 class GameOfLife:
-    def __init__(self, width: int = 640,
-                 height: int = 480, cell_size: int = 10,
-                 speed: int = 10) -> None:
+    def __init__(self, width: int = 640, height: int = 480, cell_size: int = 10, speed: int = 10) -> None:
         self.width = width
         self.height = height
         self.cell_size = cell_size
@@ -79,8 +77,7 @@ class GameOfLife:
             Матрица клеток размером `cell_height` х `cell_width`.
         """
         if randomize:
-            return [[random.randint(0, 1) for _ in range(self.cell_width)]
-                    for _ in range(self.cell_height)]
+            return [[random.randint(0, 1) for _ in range(self.cell_width)] for _ in range(self.cell_height)]
         return [[0] * self.cell_width for _ in range(self.cell_height)]
 
     def draw_grid(self) -> None:

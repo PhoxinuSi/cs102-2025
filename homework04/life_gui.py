@@ -61,8 +61,7 @@ class GUI(UI):
                         grid_x = mouse_y // self.cell_size
                         grid_y = mouse_x // self.cell_size
                         if 0 <= grid_x < self.life.rows and 0 <= grid_y < self.life.cols:
-                            self.life.curr_generation[grid_x][grid_y] = \
-                                1 - self.life.curr_generation[grid_x][grid_y]
+                            self.life.curr_generation[grid_x][grid_y] = 1 - self.life.curr_generation[grid_x][grid_y]
             if not paused:
                 self.life.step()
 
